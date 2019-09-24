@@ -31,7 +31,6 @@ def multivariate_test(dim, f, p_mean, p_cov, M, N, init_state, num_runs, \
     print("Acceptance rate: %s" % integrator.acceptance_rate)
     print("Performing MCMC...")
     for i in range(num_runs):
-        integrator.do_mcmc()
         new_estimate = integrator.do_mcmc()
         estimates.append(new_estimate)
     return estimates
@@ -47,6 +46,8 @@ def multivariate_main():
     a suitable value. If you wish to specify your own lambda, set
     proposal_cov=lambda and calibrate_cov=False in the multivariate_test
     function."""
+    
+    print("Starting the test...")
     
     # Define the function over which the expectation will be taken
     def f(x):

@@ -43,6 +43,9 @@ class proposal_dist:
         return self.variate_generator(x)
     
     def eval_pdf(self, w, x):
+        """Automatically returns 1 if the pdf is symmetric. If you wish to
+        use an asymmetric pdf, you need to pass the pdf in separately on
+        initialization."""
         if self.symmetric:
             return 1
         else:
