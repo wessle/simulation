@@ -1,8 +1,22 @@
+# This test performs MCMC to compute the expectation of a given function f
+# with respect to a given multivariate Gaussian pdf.
+#
+# How to use it: you will probably want to start by playing with the
+# multivariate_main function, which is where you can define your f and the
+# parameters of your Gaussian, set the "burn-in" period M, sample run length N,
+# and number of runs num_runs that you want to use when computing the final
+# estimate of E[f(X)].
+#
+# NOTE: unlike in the single_test case, you will NOT need to tune the variance
+# of the proposal distribution yourself -- this implementation computes it
+# for you using a simple stochastic approximation scheme to obtain a roughly
+# 23% acceptance rate. This ensure adequate but efficient exploration of the
+# state space of the Markov chain.
+
 import numpy as np
 import scipy.stats as st
 import mcmc
-  
-# Multivariate Gaussian stuff (if you want to do single-variate, set dim=1)
+
 def multivariate_test(dim, f, p_mean, p_cov, M, N, init_state, num_runs, \
                       proposal_cov=1.0, calibrate_cov=True):
 
