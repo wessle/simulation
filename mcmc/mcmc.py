@@ -1,3 +1,5 @@
+# Object definitions for the Metropolis-Hastings Markov chain Monte Carlo
+# algorithm.
 import numpy as np
 from scipy.stats import multivariate_normal
 

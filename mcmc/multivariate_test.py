@@ -1,5 +1,6 @@
-# This test performs MCMC to compute the expectation of a given function f
-# with respect to a given multivariate Gaussian pdf.
+# This test performs MCMC using the Metropolis-Hastings algorithm to compute
+# the expectation of a given function f with respect to a given multivariate
+# Gaussian pdf.
 #
 # How to use it: you will probably want to start by playing with the
 # multivariate_main function, which is where you can define your f and the
