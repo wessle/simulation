@@ -1,4 +1,6 @@
-This is a collection of implementations of various simulation-based algorithms, mainly from James C. Spall's "Introduction to Stochastic Search and Optimization."
+This is a collection of implementations of various simulation-based
+algorithms, mainly from James C. Spall's *Introduction to Stochastic
+Search and Optimization*.
 It's short now, but I'll be adding more!
 
 ## Implementations
