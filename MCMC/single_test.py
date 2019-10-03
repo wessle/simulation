@@ -21,16 +21,16 @@ def single_test(p, f, q_variance, M, N, init_state, num_runs):
     q_dist = mcmc.conditional_normal(q_variance)
     q = mcmc.proposal_dist(q_dist.sample)
     
-    integrator = mcmc.mcmc_integrator(p, f, q, M, N, init_state)
+    integrator = mcmc.mcmc_integrator(p, q, M, N, init_state)
     integrator.burn()
     
     estimates = []
     for i in range(num_runs):
-        estimates.append(integrator.do_mcmc())
+        estimates.append(integrator.do_mcmc(f))
     
     return estimates
 
-def check_acceptance_rate(p, f, q_variance):
+def check_acceptance_rate(p, q_variance):
     q_dist = mcmc.conditional_normal(q_variance)
     q = mcmc.proposal_dist(q_dist.sample)
     
@@ -38,9 +38,9 @@ def check_acceptance_rate(p, f, q_variance):
     N = 5000
     init_state = np.random.uniform(-1,1)
     
-    integrator = mcmc.mcmc_integrator(p, f, q, M, N, init_state)
+    integrator = mcmc.mcmc_integrator(p, q, M, N, init_state)
     integrator.burn()
-    integrator.do_mcmc()
+    # integrator.do_mcmc(f)
     
     return integrator.acceptance_rate
     
@@ -58,7 +58,7 @@ def single_main():
     good_to_go = False
     
     while not good_to_go:
-        acceptance_rate = check_acceptance_rate(p, f, q_variance)
+        acceptance_rate = check_acceptance_rate(p, q_variance)
         print("Current acceptance rate: %s" % acceptance_rate)
         response = input("Enter 'Y' to proceed OR input a new variance: ")
         if response in ['Y', 'y']:

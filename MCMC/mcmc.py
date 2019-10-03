@@ -61,9 +61,8 @@ class mcmc_integrator:
     
     See Ch. 16 in Spall's Intro to Stochastic Search
     and Optimization for details."""
-    def __init__(self, p, f, q, M, N, init_state):
+    def __init__(self, p, q, M, N, init_state):
         self.p = p
-        self.f = f
         self.q = q
         self.M = M
         self.N = N
@@ -97,11 +96,11 @@ class mcmc_integrator:
         for i in range(self.M):
             self.transition()
             
-    def do_mcmc(self):
+    def do_mcmc(self, f):
         """Compute the desired expectation using Markov chain Monte Carlo"""
         for i in range(1, self.N+1):
             self.transition()
-            self.expectation = ( (i-1) * self.expectation + self.f(self.x) ) / i
+            self.expectation = ( (i-1) * self.expectation + f(self.x) ) / i
         return self.expectation
     
     def reinit(self):

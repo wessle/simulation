@@ -25,7 +25,7 @@ def multivariate_test(dim, f, p_mean, p_cov, M, N, init_state, num_runs, \
     p = p_dist.evaluate
     
     q = mcmc.proposal_dist(mcmc.conditional_gaussian(proposal_cov*np.eye(dim)).sample)
-    integrator = mcmc.mcmc_integrator(p, f, q, M, N, init_state)
+    integrator = mcmc.mcmc_integrator(p, q, M, N, init_state)
     integrator.burn()
     
     print("Calibrating variance of the proposal distribution...")
@@ -37,7 +37,7 @@ def multivariate_test(dim, f, p_mean, p_cov, M, N, init_state, num_runs, \
             proposal_cov -= discount**i*(0.23 - integrator.acceptance_rate)
             proposal_cov = np.clip(proposal_cov, 0.01, 20)
             q = mcmc.proposal_dist(mcmc.conditional_gaussian(proposal_cov*np.eye(dim)).sample)
-            integrator = mcmc.mcmc_integrator(p, f, q, M, N, init_state)
+            integrator = mcmc.mcmc_integrator(p, q, M, N, init_state)
             integrator.burn()
             i += 1
 
@@ -46,7 +46,7 @@ def multivariate_test(dim, f, p_mean, p_cov, M, N, init_state, num_runs, \
     print("Acceptance rate: %s" % integrator.acceptance_rate)
     print("Performing MCMC...")
     for i in range(num_runs):
-        new_estimate = integrator.do_mcmc()
+        new_estimate = integrator.do_mcmc(f)
         estimates.append(new_estimate)
     return estimates
 
