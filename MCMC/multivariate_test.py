@@ -16,7 +16,9 @@
 
 import numpy as np
 import scipy.stats as st
+
 import mcmc
+
 
 def multivariate_test(dim, f, p_mean, p_cov, M, N, init_state, num_runs, \
                       proposal_cov=1.0, calibrate_cov=True):
@@ -24,7 +26,8 @@ def multivariate_test(dim, f, p_mean, p_cov, M, N, init_state, num_runs, \
     p_dist = mcmc.gaussian_pdf(p_mean, p_cov)
     p = p_dist.evaluate
     
-    q = mcmc.proposal_dist(mcmc.conditional_gaussian(proposal_cov*np.eye(dim)).sample)
+    q = mcmc.proposal_dist(
+            mcmc.conditional_gaussian(proposal_cov*np.eye(dim)).sample)
     integrator = mcmc.mcmc_integrator(p, q, M, N, init_state)
     integrator.burn()
     
@@ -36,7 +39,8 @@ def multivariate_test(dim, f, p_mean, p_cov, M, N, init_state, num_runs, \
             print(proposal_cov)
             proposal_cov -= discount**i*(0.23 - integrator.acceptance_rate)
             proposal_cov = np.clip(proposal_cov, 0.01, 20)
-            q = mcmc.proposal_dist(mcmc.conditional_gaussian(proposal_cov*np.eye(dim)).sample)
+            q = mcmc.proposal_dist(
+                    mcmc.conditional_gaussian(proposal_cov*np.eye(dim)).sample)
             integrator = mcmc.mcmc_integrator(p, q, M, N, init_state)
             integrator.burn()
             i += 1
@@ -49,6 +53,7 @@ def multivariate_test(dim, f, p_mean, p_cov, M, N, init_state, num_runs, \
         new_estimate = integrator.do_mcmc(f)
         estimates.append(new_estimate)
     return estimates
+
 
 def multivariate_main():
     """This function computes the expectation of a user-defined function
@@ -80,13 +85,16 @@ def multivariate_main():
     A = np.random.uniform(0, 2, (dim, dim))     # needs to be positiv definite
     p_cov = np.dot(A, np.transpose(A))
     
-    estimates = multivariate_test(dim, f, p_mean, p_cov, M, N, init_state, num_runs, proposal_cov=0.5)
-    confidence_interval = st.norm.interval(0.95, loc=np.mean(estimates), \
-                                           scale=st.sem(estimates))
+    estimates = multivariate_test(
+            dim, f, p_mean, p_cov, M, N, init_state, num_runs,
+            proposal_cov=0.5)
+    confidence_interval = st.norm.interval(
+            0.95, loc=np.mean(estimates), scale=st.sem(estimates))
     
     print("DONE!")
     print("Estimate of E[f(X)]: %s" % np.mean(estimates))
-    print("95%% confidence interval for this estimate: %s" % np.array(confidence_interval))
+    print("95%% confidence interval for this estimate: %s"
+          % np.array(confidence_interval))
     
 multivariate_main()
     

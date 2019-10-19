@@ -3,6 +3,7 @@
 import numpy as np
 from scipy.stats import multivariate_normal
 
+
 class conditional_normal:
     """Enables sampling from a normal distribution conditional on the mean,
     but with fixed variance"""
@@ -11,6 +12,7 @@ class conditional_normal:
     
     def sample(self, mean):
         return np.random.normal(loc=mean, scale=self.var)
+    
     
 class conditional_gaussian:
     """Enables samplling from a multivariate Gaussian distribution conditional
@@ -21,6 +23,7 @@ class conditional_gaussian:
     def sample(self, mean):
         return np.random.multivariate_normal(mean, cov=self.cov)
     
+    
 class gaussian_pdf:
     """Multivariate Gaussian pdf with fixed mean and covariance"""
     def __init__(self, mean, cov):
@@ -29,6 +32,7 @@ class gaussian_pdf:
         
     def evaluate(self, x):
         return multivariate_normal.pdf(x, self.mean, self.cov)
+
 
 class proposal_dist:
     """Conditional distribution of w given x. The variate_generator is a
@@ -53,6 +57,7 @@ class proposal_dist:
         else:
             return self.pdf(w, x)
 
+
 class mcmc_integrator:
     """Uses Markov chain Monte Carlo to compute an expectation with respect
     to a potentially nasty pdf p() of a function f() using a proposal 
@@ -76,7 +81,8 @@ class mcmc_integrator:
     def rho(self, w, x):
         """Computes the probability of accepting w as the next iterate in
         the Markov chain given that the current state is x."""
-        ratio = self.p(w)/self.p(x) * (self.q.eval_pdf(x, w)/(self.q.eval_pdf(w, x)))
+        ratio = self.p(w)/self.p(x) \
+            * (self.q.eval_pdf(x, w)/(self.q.eval_pdf(w, x)))
         return min(ratio, 1)
     
     def transition(self):
@@ -88,8 +94,8 @@ class mcmc_integrator:
         if u < self.rho(w, self.x):
             self.x = w
             accepted = 1
-        self.acceptance_rate = ((self.num_transitions-1)*self.acceptance_rate \
-                                    + accepted) / self.num_transitions
+        self.acceptance_rate = ((self.num_transitions-1)*self.acceptance_rate
+                                + accepted) / self.num_transitions
         
     def burn(self):
         """Perform the burn-in to get to steady-state of the Markov chain"""

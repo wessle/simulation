@@ -13,9 +13,11 @@
 # rate. This ensure adequate but efficient exploration of the state space
 # of the Markov chain.
 
-import mcmc
 import scipy.stats as st
 import numpy as np
+
+import mcmc
+
 
 def single_test(p, f, q_variance, M, N, init_state, num_runs):
     q_dist = mcmc.conditional_normal(q_variance)
@@ -29,6 +31,7 @@ def single_test(p, f, q_variance, M, N, init_state, num_runs):
         estimates.append(integrator.do_mcmc(f))
     
     return estimates
+
 
 def check_acceptance_rate(p, q_variance):
     q_dist = mcmc.conditional_normal(q_variance)
@@ -44,7 +47,8 @@ def check_acceptance_rate(p, q_variance):
     
     return integrator.acceptance_rate
     
-def single_main():
+
+def single_main(M, N, init_state, num_runs):
     def p(x):
         return 1/(np.pi*(1+x**2))
     
@@ -70,21 +74,22 @@ def single_main():
                 print(error)
                 print("q_variance must be a float")
     
-    M = 5000
-    N = 1000
-    init_state = np.random.uniform(-1,1)
-    num_runs = 500
-    
     print("Performing MCMC...")
     estimates = single_test(p, f, q_variance, M, N, init_state, num_runs)
-    confidence_interval = st.norm.interval(0.95, loc=np.mean(estimates), \
-                                       scale=st.sem(estimates))
+    confidence_interval = st.norm.interval(0.95, loc=np.mean(estimates),
+                                           scale=st.sem(estimates))
     
     print("DONE!")
     print("Estimate of E[f(X)]: %s" % np.mean(estimates))
-    print("95%% confidence interval for this estimate: %s" % np.array(confidence_interval))
+    print("95%% confidence interval for this estimate: %s" %
+          np.array(confidence_interval))
     
-single_main()
+M = 5000
+N = 1000
+init_state = np.random.uniform(-1,1)
+num_runs = 500
+
+single_main(M, N, init_state, num_runs)
     
     
     

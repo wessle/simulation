@@ -11,6 +11,7 @@
 
 import numpy as np
 
+
 class random_walk:
     def __init__(self, cov, size):
         self.cov = cov
@@ -19,6 +20,7 @@ class random_walk:
     def step(self, curr_point):
         step = np.random.multivariate_normal(np.zeros(self.size), self.cov)
         return curr_point + step
+
 
 class feasible_region:
     def __init__(self, init_point, new_point_generator, projection=None):
@@ -34,8 +36,9 @@ class feasible_region:
     def set_curr_point(self, point):
         self.curr_point = point
 
+
 class annealer:
-    def __init__(self, objective_function, feasible_region, init_temp, \
+    def __init__(self, objective_function, feasible_region, init_temp,
                  gamma, epoch_length, eps):
         self.L = objective_function
         self.feas_reg = feasible_region
