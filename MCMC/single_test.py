@@ -1,17 +1,21 @@
-# This test performs MCMC using the Metropolis-Hastings algorithm
-# to compute the expectation of a given function f with respect to a given
-# pdf p.
-#
-# How to use it: you will probably want to start by playing with the
-# single_main function, which is where you can define your f and p, set
-# the "burn-in" period M, sample run length N, and number of runs num_runs
-# that you want to use when computing the final estimate of E[f(X)].
-#
-# NOTE: you will be prompted to choose a suitable value for q_variance, the
-# fixed variance of the proposal distribution. The general rule of thumb
-# is that you will want a variance that gives you a roughly 23% acceptance
-# rate. This ensure adequate but efficient exploration of the state space
-# of the Markov chain.
+'''
+This test performs MCMC using the Metropolis-Hastings algorithm
+to compute the expectation of a given function f with respect to a given
+pdf p.
+
+How to use it: you will probably want to start by playing with the
+single_main function, which is where you can define your f and p, set
+the "burn-in" period M, sample run length N, and number of runs num_runs
+that you want to use when computing the final estimate of E[f(X)].
+
+NOTE: you will be prompted to choose a suitable value for q_variance, the
+fixed variance of the proposal distribution. The general rule of thumb
+is that you will want a variance that gives you a roughly 23% acceptance
+rate. This ensure adequate but efficient exploration of the state space
+of the Markov chain.
+
+TODO: Comment the code below.
+'''
 
 import scipy.stats as st
 import numpy as np

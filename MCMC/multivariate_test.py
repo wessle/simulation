@@ -1,18 +1,20 @@
-# This test performs MCMC using the Metropolis-Hastings algorithm to compute
-# the expectation of a given function f with respect to a given multivariate
-# Gaussian pdf.
-#
-# How to use it: you will probably want to start by playing with the
-# multivariate_main function, which is where you can define your f and the
-# parameters of your Gaussian, set the "burn-in" period M, sample run length N,
-# and number of runs num_runs that you want to use when computing the final
-# estimate of E[f(X)].
-#
-# NOTE: unlike in the single_test case, you will NOT need to tune the variance
-# of the proposal distribution yourself -- this implementation computes it
-# for you using a simple stochastic approximation scheme to obtain a roughly
-# 23% acceptance rate. This ensure adequate but efficient exploration of the
-# state space of the Markov chain.
+'''
+This test performs MCMC using the Metropolis-Hastings algorithm to compute
+the expectation of a given function f with respect to a given multivariate
+Gaussian pdf.
+
+How to use it: you will probably want to start by playing with the
+multivariate_main function, which is where you can define your f and the
+parameters of your Gaussian, set the "burn-in" period M, sample run length N,
+and number of runs num_runs that you want to use when computing the final
+estimate of E[f(X)].
+
+NOTE: unlike in the single_test case, you will NOT need to tune the variance
+of the proposal distribution yourself -- this implementation computes it
+for you using a simple stochastic approximation scheme to obtain a roughly
+23% acceptance rate. This ensure adequate but efficient exploration of the
+state space of the Markov chain.
+'''
 
 import numpy as np
 import scipy.stats as st
@@ -56,7 +58,7 @@ def multivariate_test(dim, f, p_mean, p_cov, M, N, init_state, num_runs, \
 
 
 def multivariate_main():
-    """This function computes the expectation of a user-defined function
+    """Compute the expectation of a user-defined function
     with respect to a multivariate Gaussian random variable with user-defined
     mean and covariance matrix using Markov chain Monte Carlo.
     
@@ -82,7 +84,7 @@ def multivariate_main():
     # Generate parameters of the multivariate Gaussian over which we'll
     # take the expectation.
     p_mean = np.random.uniform(-1, 1, dim)
-    A = np.random.uniform(0, 2, (dim, dim))     # needs to be positiv definite
+    A = np.random.uniform(0, 2, (dim, dim))     # needs to be positive definite
     p_cov = np.dot(A, np.transpose(A))
     
     estimates = multivariate_test(

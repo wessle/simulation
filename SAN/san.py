@@ -1,13 +1,15 @@
-# Object definitions for simulated annealing with user-specified temperature
-# epochs and geometric annealing schedule (i.e. T_k+1 = gamma T_k for some
-# 0 < gamma < 1)
-#
-# NOTE: this performs minimization of the objective function over the
-# feasible region. The random_walk object is what I'm currently using for
-# the perturbation, but a noisy gradient would likely be far more efficient.
-# Both of these are only for continuous settings, of course, so a totally
-# different perturbation method will need to be defined to handle
-# combinatorial problems.
+'''
+Object definitions for simulated annealing with user-specified temperature
+epochs and geometric annealing schedule (i.e. T_k+1 = gamma T_k for some
+0 < gamma < 1)
+
+NOTE: this performs minimization of the objective function over the
+feasible region. The random_walk object is what I'm currently using for
+the perturbation, but a noisy gradient would likely be far more efficient.
+Both of these are only for continuous settings, of course, so a totally
+different perturbation method will need to be defined to handle
+combinatorial problems.
+'''
 
 import numpy as np
 
